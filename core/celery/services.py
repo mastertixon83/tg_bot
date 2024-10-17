@@ -70,8 +70,6 @@ async def send_message_to_channel():
 
             media = db.get_media(post_id=post_id)
 
-            return MEDIA + media[0][1]
-
             bot_data = db.get_token_bot(channel_id=channel_id)
 
             if len(media) > 1:
