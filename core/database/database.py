@@ -61,7 +61,7 @@ class Database:
 
     def get_yesterday_ads_post(self):
         """Возращает вчерашние рекламные объявления"""
-        now = datetime.now()
+        now = datetime.now(TZ)
         yesterday = now.date() - timedelta(days=1)  # Вчерашняя дата
 
         cursor = self.connection.cursor()
