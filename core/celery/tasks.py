@@ -40,6 +40,7 @@ async def delete_ads(db):
     """Удаление рекламного поста с прошедшим сроком"""
     try:
         ads_posts = db.get_yesterday_ads_post()
+        return ads_posts
         for ads_post in ads_posts:
             post_id = ads_post[0]
             message_id = ads_post[10]
