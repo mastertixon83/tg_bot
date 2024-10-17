@@ -39,7 +39,6 @@ async def send_message_to_channel():
     db.connect()
     try:
         posts = db.get_posts_to_send()
-
         if not posts:
             logger.info("Нет постов для отправки")
             return {"Status": "Нет постов для отправки"}
@@ -71,6 +70,8 @@ async def send_message_to_channel():
 
             media = db.get_media(post_id=post_id)
 
+            return MEDIA + media[0][1]
+
             bot_data = db.get_token_bot(channel_id=channel_id)
 
             if len(media) > 1:
@@ -90,7 +91,6 @@ async def send_message_to_channel():
                     )
                 message_id = [msg.message_id for msg in send_message]
             elif len(media) == 1:
-                logger.debug(MEDIA + media[0][1])
                 async with Bot(token=bot_data[1]) as second_bot:
                     if builder:
                         send_message = await send_photo_with_caption(
