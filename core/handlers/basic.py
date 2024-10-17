@@ -172,7 +172,12 @@ async def handle_check_bot(callback_query: CallbackQuery, state: FSMContext, db:
         updates = updates_resp.json()
 
         update = updates['result']
-        channel_post = update[0].get("channel_post")
+        try:
+            channel_post = update[0].get("channel_post")
+        except Exception as ex:
+            await callback_query.message.delete()
+            await callback_query.message.answer("Что-то пошло не так повторите попытку", reply_markup=mainMenu)
+            await state.clear()
         # Проверяем, есть ли сообщение в канале
         if channel_post:
             channel_post = update[0]['channel_post']
@@ -194,6 +199,7 @@ async def handle_check_bot(callback_query: CallbackQuery, state: FSMContext, db:
                 else:
                     raise Exception(f"Бот {data.get('token')} уже присутствует в базе")
             except Exception as ex:
+                await state.clear()
                 await callback_query.message.answer(f"Ошибка добавления бота - {str(ex)}", reply_markup=mainMenu)
 
     else:
