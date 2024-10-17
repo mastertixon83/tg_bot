@@ -16,6 +16,7 @@ def check_time(date_var, time_var):
 
     # Объединяем дату и время в один объект datetime
     datetime_var = datetime.strptime(f"{date_var} {time_var}", "%Y-%m-%d %H:%M:%S")
+    datetime_var = TZ.localize(datetime_var)
 
     # Текущее время
     now = datetime.now(TZ)
