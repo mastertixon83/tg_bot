@@ -2,7 +2,7 @@ import psycopg2
 from datetime import datetime, timedelta
 from psycopg2 import sql
 from loguru import logger
-import pytz
+from config import TZ
 
 
 class Database:
@@ -84,8 +84,7 @@ class Database:
 
     def get_posts_to_send(self):
         """Выбирает посты которые нужно опубликовать"""
-        tz = pytz.timezone('Asia/Yekaterinburg')
-        now = datetime.now(tz)
+        now = datetime.now(TZ)
         current_date = now.date()  # Текущая дата
         current_time = now.time()  # Текущее время
 

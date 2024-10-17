@@ -3,6 +3,8 @@ from datetime import datetime
 import asyncio
 from celery import shared_task
 
+from config import TZ
+
 #celery -A core.celery.celery_app.celery_app worker --loglevel=info
 #celery -A core.celery.celery_app beat --loglevel=info
 
@@ -16,7 +18,7 @@ def check_time(date_var, time_var):
     datetime_var = datetime.strptime(f"{date_var} {time_var}", "%Y-%m-%d %H:%M:%S")
 
     # Текущее время
-    now = datetime.now()
+    now = datetime.now(TZ)
 
     # Вычисляем разницу во времени
     time_difference = now - datetime_var

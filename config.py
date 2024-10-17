@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import pytz
 
 load_dotenv()
 
@@ -19,3 +20,4 @@ DB_CONFIG = {
 # MEDIA = "/mnt/96375fe5-6a39-4e72-b221-433152ae3028/u4eba/Python/bots/telega/telega_main/telegram/media/"
 
 MEDIA = "/home/tixon/telegram/tg_base/telegram/media/"
+TZ = pytz.timezone('Asia/Yekaterinburg')
