@@ -1,5 +1,5 @@
 from aiogram import Bot, F, Router
-from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, FSInputFile
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, FSInputFile, ChatMemberAdministrator, ChatMemberOwner
 from aiogram.filters import CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.media_group import MediaGroupBuilder
@@ -19,8 +19,9 @@ router = Router()
 
 
 @router.message(CommandStart())
-async def cmd_start(message: Message):
+async def cmd_start(message: Message, state: FSMContext):
     """Обработка команды /start"""
+    await state.clear()
     text = f"Привет {message.from_user.first_name}, рад приветсвовать тебя!!!"
     await message.answer(text=text, reply_markup=mainMenu)
 
@@ -178,6 +179,8 @@ async def handle_check_bot(callback_query: CallbackQuery, state: FSMContext, db:
             await callback_query.message.delete()
             await callback_query.message.answer("Что-то пошло не так повторите попытку", reply_markup=mainMenu)
             await state.clear()
+            return
+
         # Проверяем, есть ли сообщение в канале
         if channel_post:
             channel_post = update[0]['channel_post']
@@ -186,21 +189,33 @@ async def handle_check_bot(callback_query: CallbackQuery, state: FSMContext, db:
             # await second_bot.send_message(chat_id=chat_id, text="message")
 
             try:
-                e = db.add_bot(
-                    token=data.get("token"),
-                    name=username,
-                    chat_id=chat_id,
-                    channel_title=channel_title
-                )
-                await callback_query.message.delete()
-                await state.clear()
-                if not e:
-                    await callback_query.message.answer("Отлично! Бот успешно добавлен", reply_markup=mainMenu)
-                else:
-                    raise Exception(f"Бот {data.get('token')} уже присутствует в базе")
+                member = await second_bot.get_chat_member(chat_id=chat_id, user_id=(await second_bot.me()).id)
             except Exception as ex:
+                logger.error(ex)
+
+            # Проверяем статус
+            if isinstance(member, (ChatMemberAdministrator)):
+                try:
+                    e = db.add_bot(
+                        token=data.get("token"),
+                        name=username,
+                        chat_id=chat_id,
+                        channel_title=channel_title
+                    )
+                    await callback_query.message.delete()
+                    await state.clear()
+                    if not e:
+                        await callback_query.message.answer("Отлично! Бот успешно добавлен", reply_markup=mainMenu)
+                    else:
+                        raise Exception(f"Бот {data.get('token')} уже присутствует в базе")
+                except Exception as ex:
+                    await state.clear()
+                    await callback_query.message.answer(f"Ошибка добавления бота - {str(ex)}", reply_markup=mainMenu)
+                    return
+            else:
                 await state.clear()
                 await callback_query.message.answer(f"Ошибка добавления бота - {str(ex)}", reply_markup=mainMenu)
+                return
 
     else:
         await callback_query.message.delete()
