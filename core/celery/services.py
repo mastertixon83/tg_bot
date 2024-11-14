@@ -84,7 +84,7 @@ async def send_message_to_channel():
 
                 async with Bot(token=bot_data[1]) as second_bot:
                     send_message = await second_bot.send_media_group(
-                        chat_id=bot_data[4],
+                        chat_id=bot_data[3],
                         media=media_group.build()
                     )
                 message_id = [msg.message_id for msg in send_message]
@@ -93,18 +93,18 @@ async def send_message_to_channel():
                     if builder:
                         send_message = await send_photo_with_caption(
                             bot=second_bot,
-                            chat_id=bot_data[4],
+                            chat_id=bot_data[3],
                             photo_path=MEDIA + media[0][1],
                             caption=text,
-                            has_spoiler=media[0][5],
+                            has_spoiler=media[0][4],
                             builder=builder
                         )
                     else:
                         send_message = await send_photo_with_caption(
                             bot=second_bot,
-                            chat_id=bot_data[4],
+                            chat_id=bot_data[3],
                             photo_path=MEDIA + media[0][1],
-                            has_spoiler = media[0][5],
+                            has_spoiler=media[0][4],
                             caption=text
                         )
                 message_id = send_message.message_id
@@ -112,7 +112,7 @@ async def send_message_to_channel():
                 async with Bot(token=bot_data[1]) as second_bot:
                     if builder is not None:
                         send_message = await second_bot.send_message(
-                            chat_id=bot_data[4],
+                            chat_id=bot_data[3],
                             text=text,
                             parse_mode="HTML",
                             disable_web_page_preview=True,
@@ -120,7 +120,7 @@ async def send_message_to_channel():
                         )
                     else:
                         send_message = await second_bot.send_message(
-                            chat_id=bot_data[4],
+                            chat_id=bot_data[3],
                             text=text,
                             parse_mode="HTML",
                             disable_web_page_preview=True
