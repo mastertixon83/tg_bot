@@ -51,7 +51,7 @@ async def send_message_to_channel():
             time_publication = post_info[5]
             status = post_info[6]
             type_post = post_info[7]
-            channel_id = post_info[8]
+            channel_id = post_info[14]
             article = post_info[9]
             logger.debug(post_info)
             # Проверяем наличие кнопок-ссылок под постом
