@@ -89,7 +89,7 @@ async def send_message_to_channel():
                     )
                 message_id = [msg.message_id for msg in send_message]
             elif len(media) == 1:
-                logger.debug(bot_data[1])
+                logger.debug(media[0][4])
                 async with Bot(token=bot_data[1]) as second_bot:
                     if builder:
                         send_message = await send_photo_with_caption(
