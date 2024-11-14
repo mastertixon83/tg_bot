@@ -53,7 +53,6 @@ async def send_message_to_channel():
             type_post = post_info[7]
             channel_id = post_info[14]
             article = post_info[9]
-            logger.debug(post_info)
             # Проверяем наличие кнопок-ссылок под постом
             buttons = db.get_buttons_links(post_id=post_id)
             if buttons:
