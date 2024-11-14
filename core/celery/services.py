@@ -13,7 +13,7 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
     """Отправка изображения с подписью"""
     try:
         if builder is not None:
-            reply_markup = builder.build() if builder else None
+            reply_markup = builder.as_markup() if builder else None
             return await bot.send_photo(
                 chat_id=chat_id,
                 photo=FSInputFile(photo_path),
