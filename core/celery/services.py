@@ -107,6 +107,7 @@ async def send_message_to_channel():
                             has_spoiler=media[0][4],
                             caption=text
                         )
+                logger.debug(send_message.message_id)
                 message_id = send_message.message_id
             elif len(media) == 0:
                 async with Bot(token=bot_data[1]) as second_bot:
