@@ -18,8 +18,7 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
             logger.debug(photo_path)
             return await bot.send_photo(
                 chat_id=chat_id,
-                photo=open(photo_path, "rb"),
-                # photo=FSInputFile(photo_path),
+                photo=FSInputFile(photo_path),
                 caption=caption,
                 has_spoiler=has_spoiler,
                 parse_mode='HTML',
