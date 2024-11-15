@@ -23,7 +23,7 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
                 parse_mode='HTML',
                 reply_markup=reply_markup
             )
-            logger.debug(response)
+            logger.debug(f"OTVET - {response}")
             # return await bot.send_photo(
             #     chat_id=chat_id,
             #     photo=FSInputFile(photo_path),
