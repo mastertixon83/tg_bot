@@ -11,11 +11,9 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_spoiler: bool, caption: str, builder: InlineKeyboardBuilder = None):
     """Отправка изображения с подписью"""
-    logger.debug("Зашли")
     try:
         if builder is not None:
             reply_markup = builder.as_markup() if builder else None
-            logger.debug(photo_path)
             return await bot.send_photo(
                 chat_id=chat_id,
                 photo=FSInputFile(photo_path),
