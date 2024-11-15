@@ -31,7 +31,7 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
                 parse_mode='HTML'
             )
     except Exception as ex:
-        logger.error(ex)
+        logger.error(f"Не прошло сенд фото - {ex}")
 
 
 async def send_message_to_channel():
