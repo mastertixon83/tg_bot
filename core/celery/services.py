@@ -15,7 +15,9 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
     try:
         if builder is not None:
             reply_markup = builder.as_markup() if builder else None
-            logger.debug(photo_path)
+            logger.debug(chat_id)
+            logger.debug(caption)
+            logger.debug(reply_markup)
             return await bot.send_photo(
                 chat_id=chat_id,
                 photo=FSInputFile(photo_path),
@@ -25,6 +27,8 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
                 reply_markup=reply_markup
             )
         else:
+            logger.debug(chat_id)
+            logger.debug(caption)
             return await bot.send_photo(
                 chat_id=chat_id,
                 photo=FSInputFile(photo_path),
