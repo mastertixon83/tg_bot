@@ -17,7 +17,8 @@ async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_s
             reply_markup = builder.as_markup() if builder else None
             return await bot.send_photo(
                 chat_id=chat_id,
-                photo=FSInputFile(photo_path),
+                photo=open(photo_path, "rb"),
+                # photo=FSInputFile(photo_path),
                 caption=caption,
                 has_spoiler=has_spoiler,
                 parse_mode='HTML',
