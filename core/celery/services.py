@@ -39,6 +39,7 @@ async def send_message_to_channel():
     """Отправка сообщения в канал"""
     db = Database(DB_CONFIG)
     db.connect()
+
     try:
         posts = db.get_posts_to_send()
         if not posts:

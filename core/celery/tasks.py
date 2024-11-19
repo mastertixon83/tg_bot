@@ -8,6 +8,7 @@ from config import TZ
 #celery -A core.celery.celery_app.celery_app worker --loglevel=info
 #celery -A core.celery.celery_app beat --loglevel=info
 
+
 def check_time(date_var, time_var):
     """Проверка времени"""
     # Ваша дата и время
@@ -44,16 +45,16 @@ async def delete_ads(db):
         logger.debug(ads_posts)
         for ads_post in ads_posts:
             post_id = ads_post[0]
-            message_id = ads_post[10]
-            channel_id = ads_post[8]
-            date_var = ads_post[4]
-            time_var = ads_post[5]
+            message_id = ads_post[11]
+            channel_id = ads_post[14]
+            date_var = ads_post[6]
+            time_var = ads_post[7]
             variance = check_time(date_var=date_var, time_var=time_var)
 
             if variance > 24:
                 bot = db.get_token_bot(channel_id=channel_id)
                 bot_token = bot[1]
-                chat_id = bot[4]
+                chat_id = bot[3]
                 try:
                     db.change_ads_status(post_id=post_id)
                     message_ids = parse_value(message_id)
