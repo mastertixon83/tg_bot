@@ -34,8 +34,12 @@ async def cmd_start(message: Message, state: FSMContext):
 
 @router.message(StateFilter(None), F.text == "Найти фото")
 async def test_select(message: Message, state: FSMContext, db: Database):
-    second_bot = Bot(token="7428797811:AAF0zPdkhpBADfbBmlNq-JOxb2blQE5KPcg")
-    await send_message_to_channel()
+    # second_bot = Bot(token="7428797811:AAF0zPdkhpBADfbBmlNq-JOxb2blQE5KPcg")
+    # await send_message_to_channel()
+
+@router.message(StateFilter(None), F.text == "Ссылка на сайт")
+async def test_select(message: Message, state: FSMContext, db: Database):
+    await message.answer("Супер сайт: http://93.183.105.111/")
 
 
 @router.message(StateFilter(None), F.text == "Добавить пост в БД")

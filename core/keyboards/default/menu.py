@@ -7,7 +7,8 @@ mainMenu = ReplyKeyboardMarkup(
             KeyboardButton(text="Найти фото"),
         ],
         [
-            KeyboardButton(text="Добавить пост в БД")
+            KeyboardButton(text="Добавить пост в БД"),
+            KeyboardButton(text="Ссылка на сайт")
         ]
     ],
     resize_keyboard=True
