@@ -40,7 +40,7 @@ async def test_select(message: Message, state: FSMContext, db: Database):
 
 @router.message(StateFilter(None), F.text == "Ссылка на сайт")
 async def test_select(message: Message, state: FSMContext, db: Database):
-    await message.answer("<a href='Супер сайт'>http://93.183.105.111</a>", parse_mode="HTML")
+    await message.answer("<a href='http://93.183.105.111'>Супер сайт</a>", parse_mode="HTML")
 
 
 @router.message(StateFilter(None), F.text == "Добавить пост в БД")
