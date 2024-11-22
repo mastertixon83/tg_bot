@@ -37,7 +37,7 @@ async def test_select(message: Message, state: FSMContext, db: Database):
     pass
     # second_bot = Bot(token="7428797811:AAF0zPdkhpBADfbBmlNq-JOxb2blQE5KPcg")
     # await send_message_to_channel()
-    # await message.answer(text="<b>Text</b> простой текст - <strong> Text2</strong> простой текст <blockquote>Это текст цитаты в HTML формате.</blockquote>", parse_mode="HTML")
+
 
 @router.message(StateFilter(None), F.text == "Ссылка на сайт")
 async def test_select(message: Message, state: FSMContext, db: Database):
