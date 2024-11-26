@@ -50,12 +50,12 @@ async def send_message_to_channel():
             created_at = post_info[1]
             updated_at = post_info[2]
             text = post_info[3]
-            data_publication = post_info[4]
-            time_publication = post_info[5]
-            status = post_info[6]
-            type_post = post_info[7]
+            data_publication = post_info[6]
+            time_publication = post_info[7]
+            status = post_info[8]
+            type_post = post_info[10]
             channel_id = post_info[14]
-            article = post_info[9]
+            article = post_info[5]
             # Проверяем наличие кнопок-ссылок под постом
             buttons = db.get_buttons_links(post_id=post_id)
             if buttons:
@@ -94,7 +94,7 @@ async def send_message_to_channel():
             elif len(media) == 1:
 
                 async with Bot(token=bot_data[1]) as second_bot:
-                    if builder:
+                    if builder: # Отправка сообщения с кнопками
                         send_message = await send_photo_with_caption(
                             bot=second_bot,
                             chat_id=bot_data[3],
@@ -103,7 +103,7 @@ async def send_message_to_channel():
                             has_spoiler=media[0][4],
                             builder=builder
                         )
-                    else:
+                    else: # Отправка сообщения без кнопок
                         send_message = await send_photo_with_caption(
                             bot=second_bot,
                             chat_id=bot_data[3],
