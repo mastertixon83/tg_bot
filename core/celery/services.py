@@ -56,6 +56,7 @@ async def send_message_to_channel():
             type_post = post_info[10]
             channel_id = post_info[14]
             article = post_info[5]
+            answers = [answer for answer in post_info[15].split(',')]
             # Проверяем наличие кнопок-ссылок под постом
             buttons = db.get_buttons_links(post_id=post_id)
             if buttons:
@@ -124,12 +125,22 @@ async def send_message_to_channel():
                             reply_markup=builder.as_markup()
                         )
                     else:
-                        send_message = await second_bot.send_message(
-                            chat_id=bot_data[3],
-                            text=text,
-                            parse_mode="HTML",
-                            disable_web_page_preview=True
-                        )
+                        if type_post != "M" and type_post != "Q":
+                            send_message = await second_bot.send_message(
+                                chat_id=bot_data[3],
+                                text=text,
+                                parse_mode="HTML",
+                                disable_web_page_preview=True
+                            )
+                        else:
+                            send_message = await second_bot.send_poll(
+                                chat_id=bot_data[3],
+                                question=text,
+                                options=answers,
+                                is_anonymous=True,
+                                allows_multiple_answers=True if type_post == "M" else False,  # Установка типа голосования
+                                open_period=86400,  # Время активности голосования (в секундах)
+                            )
 
                     message_id = send_message.message_id
             db.mark_post_as_sent(post_id=post_id, message_id=message_id)
