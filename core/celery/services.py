@@ -58,7 +58,8 @@ async def send_message_to_channel():
             type_post = post_info[10]
             channel_id = post_info[14]
             article = post_info[5]
-            answers = [answer for answer in post_info[15].split(',')]
+            answers = [answer.strip() for answer in post_info[15].split(',')]
+            correct_answer = post_info[16]
             # Проверяем наличие кнопок-ссылок под постом
             buttons = db.get_buttons_links(post_id=post_id)
             if buttons:
@@ -135,13 +136,15 @@ async def send_message_to_channel():
                                 disable_web_page_preview=True
                             )
                         else:
+                            #Отправка голосования
                             send_message = await second_bot.send_poll(
                                 chat_id=bot_data[3],
                                 question=text,
                                 options=answers,
                                 is_anonymous=True,
-                                allows_multiple_answers=True if type_post == "M" else False,  # Установка типа голосования
-                                close_date=int((datetime.now() + timedelta(hours=24)).timestamp())  # Указываем дату завершения через 24 часа
+                                # allows_multiple_answers=True if type_post == "M" else False,  # Установка типа голосования
+                                type="quiz",  # Тип опроса: викторина
+                                correct_option_id=answers.index(correct_answer),  # Указываем правильный вариант
                             )
 
                     message_id = send_message.message_id
