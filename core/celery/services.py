@@ -8,6 +8,8 @@ from config import DB_CONFIG, MEDIA
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from datetime import datetime, timedelta
+
 
 async def send_photo_with_caption(bot: Bot, chat_id: int, photo_path: str, has_spoiler: bool, caption: str, builder: InlineKeyboardBuilder = None):
     """Отправка изображения с подписью"""
@@ -139,7 +141,7 @@ async def send_message_to_channel():
                                 options=answers,
                                 is_anonymous=True,
                                 allows_multiple_answers=True if type_post == "M" else False,  # Установка типа голосования
-                                open_period=86400,  # Время активности голосования (в секундах)
+                                close_date=int((datetime.now() + timedelta(hours=24)).timestamp())  # Указываем дату завершения через 24 часа
                             )
 
                     message_id = send_message.message_id
