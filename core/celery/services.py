@@ -44,6 +44,7 @@ async def send_message_to_channel():
 
     try:
         posts = db.get_posts_to_send()
+        logger.debug(posts)
         if not posts:
             logger.info("Нет постов для отправки")
             return {"Status": "Нет постов для отправки"}
